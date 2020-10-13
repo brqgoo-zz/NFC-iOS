@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,9 @@
 		272E950525344BA20014F926 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272E950325344BA20014F926 /* Main.storyboard */; };
 		272E950725344BA50014F926 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272E950625344BA50014F926 /* Assets.xcassets */; };
 		272E950A25344BA50014F926 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272E950825344BA50014F926 /* LaunchScreen.storyboard */; };
+		27F226A92535D87E00074DED /* CryptorECC in Frameworks */ = {isa = PBXBuildFile; productRef = 27F226A82535D87E00074DED /* CryptorECC */; };
+		27F226AB253627D500074DED /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F226AA253627D500074DED /* AuthViewController.swift */; };
+		BD9C835552E569A33D0F9644 /* Pods_NFC_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99692A0188D6B2039FBF7E0A /* Pods_NFC_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,10 @@
 		272E950925344BA50014F926 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		272E950B25344BA50014F926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		272E95112534502B0014F926 /* NFC-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "NFC-iOS.entitlements"; sourceTree = "<group>"; };
+		27F226AA253627D500074DED /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		5B72462BE0CB6FB64DC19C9D /* Pods-NFC-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NFC-iOS.release.xcconfig"; path = "Target Support Files/Pods-NFC-iOS/Pods-NFC-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		99692A0188D6B2039FBF7E0A /* Pods_NFC_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NFC_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C22B4AB264183C426E999748 /* Pods-NFC-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NFC-iOS.debug.xcconfig"; path = "Target Support Files/Pods-NFC-iOS/Pods-NFC-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F226A92535D87E00074DED /* CryptorECC in Frameworks */,
+				BD9C835552E569A33D0F9644 /* Pods_NFC_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +52,8 @@
 			children = (
 				272E94FC25344BA20014F926 /* NFC-iOS */,
 				272E94FB25344BA20014F926 /* Products */,
+				2BDFB04D2C4D4A53B1605332 /* Pods */,
+				B365432B835342D3999D6C0A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,12 +72,30 @@
 				272E94FD25344BA20014F926 /* AppDelegate.swift */,
 				272E94FF25344BA20014F926 /* SceneDelegate.swift */,
 				272E950125344BA20014F926 /* ViewController.swift */,
+				27F226AA253627D500074DED /* AuthViewController.swift */,
 				272E950325344BA20014F926 /* Main.storyboard */,
 				272E950625344BA50014F926 /* Assets.xcassets */,
 				272E950825344BA50014F926 /* LaunchScreen.storyboard */,
 				272E950B25344BA50014F926 /* Info.plist */,
 			);
 			path = "NFC-iOS";
+			sourceTree = "<group>";
+		};
+		2BDFB04D2C4D4A53B1605332 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C22B4AB264183C426E999748 /* Pods-NFC-iOS.debug.xcconfig */,
+				5B72462BE0CB6FB64DC19C9D /* Pods-NFC-iOS.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B365432B835342D3999D6C0A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99692A0188D6B2039FBF7E0A /* Pods_NFC_iOS.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -76,15 +105,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 272E950E25344BA50014F926 /* Build configuration list for PBXNativeTarget "NFC-iOS" */;
 			buildPhases = (
+				E4CCCAF710803D9F42C5FB2C /* [CP] Check Pods Manifest.lock */,
 				272E94F625344BA20014F926 /* Sources */,
 				272E94F725344BA20014F926 /* Frameworks */,
 				272E94F825344BA20014F926 /* Resources */,
+				0C7B2016DCA3FCC2C73CA09A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "NFC-iOS";
+			packageProductDependencies = (
+				27F226A82535D87E00074DED /* CryptorECC */,
+			);
 			productName = "NFC-iOS";
 			productReference = 272E94FA25344BA20014F926 /* NFC-iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +147,9 @@
 				Base,
 			);
 			mainGroup = 272E94F125344BA10014F926;
+			packageReferences = (
+				27F226A72535D87E00074DED /* XCRemoteSwiftPackageReference "BlueECC" */,
+			);
 			productRefGroup = 272E94FB25344BA20014F926 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -135,11 +172,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0C7B2016DCA3FCC2C73CA09A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NFC-iOS/Pods-NFC-iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NFC-iOS/Pods-NFC-iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NFC-iOS/Pods-NFC-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4CCCAF710803D9F42C5FB2C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NFC-iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		272E94F625344BA20014F926 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F226AB253627D500074DED /* AuthViewController.swift in Sources */,
 				272E950225344BA20014F926 /* ViewController.swift in Sources */,
 				272E94FE25344BA20014F926 /* AppDelegate.swift in Sources */,
 				272E950025344BA20014F926 /* SceneDelegate.swift in Sources */,
@@ -284,6 +364,7 @@
 		};
 		272E950F25344BA50014F926 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C22B4AB264183C426E999748 /* Pods-NFC-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "NFC-iOS/NFC-iOS.entitlements";
@@ -303,6 +384,7 @@
 		};
 		272E951025344BA50014F926 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B72462BE0CB6FB64DC19C9D /* Pods-NFC-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "NFC-iOS/NFC-iOS.entitlements";
@@ -342,6 +424,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		27F226A72535D87E00074DED /* XCRemoteSwiftPackageReference "BlueECC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/BlueECC";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.200;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		27F226A82535D87E00074DED /* CryptorECC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27F226A72535D87E00074DED /* XCRemoteSwiftPackageReference "BlueECC" */;
+			productName = CryptorECC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 272E94F225344BA10014F926 /* Project object */;
 }

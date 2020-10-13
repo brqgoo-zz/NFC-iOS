@@ -9,12 +9,28 @@
 import UIKit
 import CoreNFC
 import CryptoKit
+import CryptorECC
+import web3swift
+
+struct Wallet {
+    let address: String
+    let data: Data
+    let name: String
+    let isHD: Bool
+}
+
 
 class ViewController: UIViewController, NFCTagReaderSessionDelegate {
     
     @IBOutlet weak var tb: UITextField!
     
     var tbText:String = ""
+    var userPrivateKeyStr:String = ""
+    var userPublicKeyStr:String = ""
+    
+    @IBOutlet weak var privateKeyBox: UITextView!
+    @IBOutlet weak var publicKeyBox: UITextView!
+    
     
     
     var PWD:Data = Data(bytes: [0xA2,0x2B,0xFF,0xFF,0xFF,0xFF], count: [0xA2,0x2B,0xFF,0xFF,0xFF,0xFF].count)
@@ -51,11 +67,20 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
                 }
                 print("UID: \(uid)")
                 
-                var payloadData = Data([0x02,0x65,0x6E]) // 0x02 + 'en' = Locale Specifier
-                let hashed = SHA256.hash(data: Data("\(uid)\(self.tbText)".utf8))
-                let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+                var payloadData = Data([0xFF,0xFF,0xFF,0xFF])
                 
-                payloadData.append("nfcauth?uidnaber=\(uid)&data=\(self.tbText)&hash=\(hashString)".data(using: .utf8)!)
+                payloadData.append(self.tbText.data(using: .utf8)!)
+                
+                payloadData.append(contentsOf: [0xFF,0xFF,0xFF,0xFF])
+
+                let message = Web3.Utils.sha256("\(uid)\(self.tbText.data(using: .utf8)!.toHexString())".data(using: .utf8)!)
+                
+                print("message")
+                print(message?.hexEncodedString())
+                
+                let sig = SECP256K1.signForRecovery(hash: message!, privateKey: Data(hex: self.userPrivateKeyStr))
+                
+                payloadData.append(sig.serializedSignature!)
 
                 let payload = NFCNDEFPayload.init(
                     format: NFCTypeNameFormat.nfcWellKnown,
@@ -64,8 +89,6 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
                     payload: payloadData,
                     chunkSize: 0)
                 
-                print("yua")
-    
                 tag.queryNDEFStatus() { (status: NFCNDEFStatus, capacity: Int, error: Error?) in
                     if error != nil {
                         session.invalidate(errorMessage: "Fail to determine NDEF status. Please try again.")
@@ -143,11 +166,50 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
         // Do any additional setup after loading the view.
         title = "Write"
         tb.addDoneButtonOnKeyboard()
+        privateKeyBox.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        publicKeyBox.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         
+        if UserDefaults.standard.object(forKey: "UserPrivateKey") != nil{
+            print("non first time")
+            userPrivateKeyStr = UserDefaults.standard.object(forKey: "UserPrivateKey") as! String
+            userPublicKeyStr = UserDefaults.standard.object(forKey: "UserPublicKey") as! String
+            print(userPrivateKeyStr)
+        }
+        else {
+            print("first time")
+            let privatekey:String = (SECP256K1.generatePrivateKey()?.hexEncodedString())!
+            
+            UserDefaults.standard.set(privatekey, forKey: "UserPrivateKey")
+            userPrivateKeyStr = UserDefaults.standard.object(forKey: "UserPrivateKey") as! String
+            print(userPrivateKeyStr)
+            
+            let publickey:String = (SECP256K1.privateToPublic(privateKey: Data(hex: privatekey))?.hexEncodedString())!
+            
+            UserDefaults.standard.set(publickey, forKey: "UserPublicKey")
+            userPublicKeyStr = UserDefaults.standard.object(forKey: "UserPublicKey") as! String
+            
+        }
+        
+        privateKeyBox.text = userPrivateKeyStr
+        publicKeyBox.text = userPublicKeyStr
+        
+
+        
+        
+        
+        
+        //let recoveredpublickey:String = (SECP256K1.recoverPublicKey(hash: message!, signature: sig.serializedSignature!)?.hexEncodedString())!
+
+        
+    }
+    
+    @objc func tapDone(sender: Any) {
+        self.view.endEditing(true)
     }
     
     @IBAction func beginScanning(_ sender: Any) {
         if(tb.text!.count>=1){
+            if(SECP256K1.privateToPublic(privateKey: privateKeyBox.text.hexaData) == publicKeyBox.text.hexaData){
             
             tbText = self.tb.text!
             
@@ -167,8 +229,14 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
         session.begin()
     }
         else {
-            
+                
+                let alert = UIAlertController(title: "Error", message: "Given private key and public key pairs does not match.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+
+                
         }
+    }
     }
     
     
@@ -235,3 +303,31 @@ extension UITextField{
     }
 }
 
+extension String {
+    func split(by length: Int) -> [String] {
+        var startIndex = self.startIndex
+        var results = [Substring]()
+        
+        while startIndex < self.endIndex {
+            let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            results.append(self[startIndex..<endIndex])
+            startIndex = endIndex
+        }
+        
+        return results.map { String($0) }
+    }
+}
+extension UITextView {
+    
+    func addDoneButton(title: String, target: Any, selector: Selector) {
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0,
+                                              y: 0.0,
+                                              width: UIScreen.main.bounds.size.width,
+                                              height: 44.0))//1
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)//2
+        let barButton = UIBarButtonItem(title: title, style: .plain, target: target, action: selector)//3
+        toolBar.setItems([flexible, barButton], animated: false)//4
+        self.inputAccessoryView = toolBar//5
+    }
+}
