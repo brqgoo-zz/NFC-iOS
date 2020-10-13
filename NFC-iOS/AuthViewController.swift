@@ -12,6 +12,9 @@ import web3swift
 
 class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
     
+    @IBOutlet weak var pubkeybox: UITextView!
+    var pubkeyboxStr:String = ""
+    
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         print("errpr1")
     }
@@ -61,6 +64,15 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
                         print("recoveredpubkey")
                         print(recoveredpubkey?.hexEncodedString())
                         
+                        if (self.pubkeyboxStr.lowercased() == recoveredpubkey?.hexEncodedString().lowercased()){
+                            session.alertMessage = "Authentication succeed! \n \n \(String(decoding: decodedHexData.hexaData, as: UTF8.self))"
+                            session.invalidate()
+                            return
+                        }
+                        else {
+                            session.invalidate(errorMessage: "Authentication failed.")
+                        }
+                        
                         return
                         
                         }
@@ -81,17 +93,33 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        title = "Auth"
+        
+        pubkeybox.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
         // Do any additional setup after loading the view.
     }
     
     
     @IBAction func beginScanning(_ sender: Any) {
         
+        pubkeyboxStr = pubkeybox.text
+        
+        if(pubkeyboxStr.count >= 124){
         let session:NFCTagReaderSession = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)!
         session.alertMessage = "Hold your iPhone near the item to learn more about it."
         session.begin()
+        }
+        else {
+            let alert = UIAlertController(title: "Error", message: "Please type expected public key.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
+    }
+    
+    @objc func tapDone(sender: Any) {
+        self.view.endEditing(true)
     }
     
 
@@ -106,3 +134,4 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
     */
 
 }
+

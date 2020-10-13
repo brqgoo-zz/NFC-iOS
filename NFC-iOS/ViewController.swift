@@ -108,43 +108,24 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
                                   if error != nil {
                                       session.invalidate(errorMessage: "Update tag failed. Please try again.")
                                   } else {
-                                      
+
                                   }
                               }
                         
-                        /*
                                
                               tag.writeLock() { (error: Error?) in
                                   if error != nil {
                                       session.invalidate(errorMessage: "Lock failed.")
                                       return
                                   } else {
+                                    session.alertMessage = "Writing success!"
+                                    session.invalidate()
+                                    return
                                   }
                               }
+
                         
-                        */
-                              
-                              tag.readNDEF { (message: NFCNDEFMessage?, error: Error?) in
 
-                                  for record in message!.records {
-                                          
-
-                                      if record.payload.count >= 3{
-                                          print("mua")
-                                          print(String(decoding: Data(String(record.payload.hexEncodedString()).hexaData), as: UTF8.self))
-                                          
-                                          session.alertMessage = "Writing success!"
-                                          session.invalidate()
-                                          return
-                                          
-                                          }
-                                          else {
-                                              
-                                          }
-                                          
-                                      }
-
-                              }
                         
                     } else {
                         session.invalidate(errorMessage: "This tag might have been damaged.")
@@ -210,6 +191,9 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
     @IBAction func beginScanning(_ sender: Any) {
         if(tb.text!.count>=1){
             if(SECP256K1.privateToPublic(privateKey: privateKeyBox.text.hexaData) == publicKeyBox.text.hexaData){
+                
+                userPrivateKeyStr = UserDefaults.standard.object(forKey: "UserPrivateKey") as! String
+                userPublicKeyStr = UserDefaults.standard.object(forKey: "UserPublicKey") as! String
             
             tbText = self.tb.text!
             
@@ -237,6 +221,11 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
                 
         }
     }
+            else {
+                let alert = UIAlertController(title: "Error", message: "Please type something first.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
     }
     
     

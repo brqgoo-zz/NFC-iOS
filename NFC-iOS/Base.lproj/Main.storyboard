@@ -21,7 +21,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="CZT-27-Psz"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -32,7 +31,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="81" id="uSv-c8-dXa"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -150,19 +148,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Amk-Eb-a05">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expected Public Key:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ae-pC-OTy">
+                                <rect key="frame" x="20" y="121" width="161" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3SX-bJ-K79">
+                                <rect key="frame" x="20" y="150" width="374" height="69"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="znD-ad-HLT"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Amk-Eb-a05">
+                                <rect key="frame" x="125" y="264" width="164" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="605-lH-lQg"/>
+                                    <constraint firstAttribute="height" constant="44" id="pRF-Ot-hrp"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Authorize tag"/>
                                 <connections>
                                     <action selector="beginScanning:" destination="jqg-cX-UtA" eventType="touchUpInside" id="L24-tk-HND"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="1ae-pC-OTy" firstAttribute="leading" secondItem="mll-Yu-nXn" secondAttribute="leadingMargin" id="KWM-5g-YhW"/>
+                            <constraint firstItem="1ae-pC-OTy" firstAttribute="top" secondItem="jpo-GR-LFP" secondAttribute="top" constant="33" id="Qg2-cn-LAy"/>
+                            <constraint firstItem="3SX-bJ-K79" firstAttribute="top" secondItem="1ae-pC-OTy" secondAttribute="bottom" constant="8" id="W6x-hb-IoB"/>
+                            <constraint firstItem="Amk-Eb-a05" firstAttribute="top" secondItem="3SX-bJ-K79" secondAttribute="bottom" constant="45" id="WhE-9w-wCn"/>
+                            <constraint firstItem="1ae-pC-OTy" firstAttribute="leading" secondItem="3SX-bJ-K79" secondAttribute="leading" id="ail-TS-c7x"/>
+                            <constraint firstItem="3SX-bJ-K79" firstAttribute="centerX" secondItem="Amk-Eb-a05" secondAttribute="centerX" id="eIL-ua-MiF"/>
+                            <constraint firstItem="3SX-bJ-K79" firstAttribute="trailing" secondItem="mll-Yu-nXn" secondAttribute="trailingMargin" id="gcl-Rm-VOQ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="jpo-GR-LFP"/>
                     </view>
                     <navigationItem key="navigationItem" id="m7C-d2-WEc"/>
+                    <connections>
+                        <outlet property="pubkeybox" destination="3SX-bJ-K79" id="hzR-iY-od4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RjF-tY-Jgs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
