@@ -15,6 +15,8 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
     @IBOutlet weak var pubkeybox: UITextView!
     var pubkeyboxStr:String = ""
     
+        var AUTH0:Data = Data(bytes: [0xB1,0xFF,0xFF,0xFF,0xFF], count: [0xB1,0xFF,0xFF,0xFF,0xFF].count)
+    
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         print("errpr1")
     }
@@ -29,27 +31,25 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
         session.connect(to: tags.first!) { (error: Error?) in
             
             tag.readNDEF { (message: NFCNDEFMessage?, error: Error?) in
+                
+                tag.sendMiFareCommand(commandPacket: self.AUTH0, completionHandler: { (data0, error) in
+                                   
+                                   debugPrint(data0.hexEncodedString())
+                                   debugPrint(error as Any)
+                
+                               })
 
                 for record in message!.records {
                         
-                    var byteData = [UInt8]()
-                    tag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-                    var uid = "0"
-                    byteData.forEach {
-                        uid.append(String($0, radix: 16))
-                    }
-                    print("UID: \(uid)")
-
-                    
                     if record.payload.count >= 3{
-                        print("record")
-                        print(record.payload.hexEncodedString())
+                        print("uid")
+                        print(tag.identifier.hexEncodedString())
                         
                         let decodedHexData = record.payload.hexEncodedString().components(separatedBy: "ffffffff")[1].components(separatedBy: "ffffffff")[0]
                         print("decodedHexData")
                         print(decodedHexData)
                         
-                        let message = Web3.Utils.sha256("\(uid)\(decodedHexData)".data(using: .utf8)!)
+                        let message = Web3.Utils.sha256("\(tag.identifier.hexEncodedString().lowercased())\(decodedHexData.lowercased())".hexaData)
                         
                         print("message")
                         print(message?.hexEncodedString())

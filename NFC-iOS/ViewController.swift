@@ -59,21 +59,13 @@ class ViewController: UIViewController, NFCTagReaderSessionDelegate {
  
                 })
 
-                var byteData = [UInt8]()
-                tag.identifier.withUnsafeBytes { byteData.append(contentsOf: $0) }
-                var uid = "0"
-                byteData.forEach {
-                    uid.append(String($0, radix: 16))
-                }
-                print("UID: \(uid)")
-                
                 var payloadData = Data([0xFF,0xFF,0xFF,0xFF])
                 
                 payloadData.append(self.tbText.data(using: .utf8)!)
                 
                 payloadData.append(contentsOf: [0xFF,0xFF,0xFF,0xFF])
 
-                let message = Web3.Utils.sha256("\(uid)\(self.tbText.data(using: .utf8)!.toHexString())".data(using: .utf8)!)
+                let message = Web3.Utils.sha256("\(tag.identifier.hexEncodedString().lowercased())\(self.tbText.data(using: .utf8)!.toHexString().lowercased())".hexaData)
                 
                 print("message")
                 print(message?.hexEncodedString())

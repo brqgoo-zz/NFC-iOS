@@ -172,7 +172,7 @@
                                     <constraint firstAttribute="height" constant="44" id="pRF-Ot-hrp"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Authorize tag"/>
+                                <state key="normal" title="Authenticate tag"/>
                                 <connections>
                                     <action selector="beginScanning:" destination="jqg-cX-UtA" eventType="touchUpInside" id="L24-tk-HND"/>
                                 </connections>
