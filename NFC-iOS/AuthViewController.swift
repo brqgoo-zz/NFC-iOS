@@ -15,7 +15,7 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
     @IBOutlet weak var pubkeybox: UITextView!
     var pubkeyboxStr:String = ""
     
-        var AUTH0:Data = Data(bytes: [0xB1,0xFF,0xFF,0xFF,0xFF], count: [0xB1,0xFF,0xFF,0xFF,0xFF].count)
+        //var AUTH0:Data = Data(bytes: [0xB1,0xFF,0xFF,0xFF,0xFF], count: [0xB1,0xFF,0xFF,0xFF,0xFF].count)
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         print("errpr1")
@@ -32,12 +32,14 @@ class AuthViewController: UIViewController, NFCTagReaderSessionDelegate {
             
             tag.readNDEF { (message: NFCNDEFMessage?, error: Error?) in
                 
+                /*
                 tag.sendMiFareCommand(commandPacket: self.AUTH0, completionHandler: { (data0, error) in
                                    
                                    debugPrint(data0.hexEncodedString())
                                    debugPrint(error as Any)
                 
                                })
+ */
 
                 for record in message!.records {
                         
